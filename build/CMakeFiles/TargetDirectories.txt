@@ -1,0 +1,3 @@
+C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/PI.dir
+C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/ZERO_CHECK.dir
