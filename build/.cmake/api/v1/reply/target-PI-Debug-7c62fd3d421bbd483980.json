@@ -75,8 +75,8 @@
 			"language" : "CXX",
 			"sourceIndexes" : 
 			[
-				2,
-				3
+				1,
+				2
 			]
 		}
 	],
@@ -124,26 +124,20 @@
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				0,
-				1
+				0
 			]
 		},
 		{
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				2,
-				3
+				1,
+				2
 			]
 		}
 	],
 	"sources" : 
 	[
-		{
-			"backtrace" : 1,
-			"path" : "include/AudioFile.h",
-			"sourceGroupIndex" : 0
-		},
 		{
 			"backtrace" : 1,
 			"path" : "include/AudioPlayer.h",

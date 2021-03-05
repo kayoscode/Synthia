@@ -9,9 +9,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\Bryce\Documents\ImageData\include\AudioFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="C:\Users\Bryce\Documents\ImageData\include\AudioPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>

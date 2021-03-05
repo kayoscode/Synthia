@@ -74,10 +74,12 @@ std::vector<std::string> AudioPlayer::enumerateAudioDevices() {
 }
 
 void AudioPlayer::playAudio(const AudioBuffer& buffer, float listenerX, float listenerY, float listenerZ, float soundX, float soundY, float soundZ) {
-    alListenerf(AL_GAIN, volume);
+    alcMakeContextCurrent(deviceContext);
+    alSourcef(source, AL_GAIN, volume);
     alListener3f(AL_POSITION, listenerX, listenerY, listenerZ);
-    //alSource3f(AL_POSITION, soundX, soundY, soundZ);
+    alSource3f(source, AL_POSITION, soundX, soundY, soundZ);
 
+    alSourcei(source, AL_LOOPING, 0);
     alSourcei(source, AL_BUFFER, buffer.getBuffer());
     alSourcef(source, AL_SEC_OFFSET, 0);
     alSourcePlay(source);
@@ -93,7 +95,8 @@ AudioBuffer::AudioBuffer()
 }
 
 AudioBuffer::~AudioBuffer() {
-    delete data;
+    alDeleteBuffers(1, &buffer);
+    delete[] data;
 }
 
 void loadWAVChunkData(std::ifstream& file, std::string& name, unsigned int& size) {
@@ -165,4 +168,71 @@ ALenum AudioBuffer::getFormat() const {
     }
 
     return AL_FORMAT_MONO8;
+}
+
+bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int minFreq, int maxFreq, float time) {
+    this->length = time;
+    this->bitRate = 16;
+    this->channels = 1;
+    this->frequencyRate = 48 * 1000;
+    int samplesCount = (frequencyRate) * length;
+    this->size = samplesCount;
+    this->data = new char[bitRate / 8 * samplesCount];
+    std::vector<float> encodedData(samplesCount);
+
+    for(int i = 0; i < encodedData.size(); ++i) {
+        encodedData[i] = 0;
+    }
+
+    float secondsPerNote = time / width;
+    float currentTime = 0;
+
+    if(height <= 1) {
+        height = 2;
+        minFreq = (maxFreq - minFreq) / 2;
+    }
+
+    std::vector<int> frequencies(height);
+
+    for(int i = 0; i < height; ++i) {
+        frequencies[i] = std::floor((((float)(maxFreq - minFreq) / std::max((height - 1), 1)) * (height - i - 1)) + minFreq);
+    }
+
+    //convert data in buffer to digital audio signal
+    for(int i = 0; i < width; ++i) {
+        for(int j = 0; j < height; ++j) {
+            int index = (width * j) + i;
+            float signalFrequency = frequencies[j];
+
+            if(bufferData[index] > 0) {
+                encodeFreq(signalFrequency, secondsPerNote, currentTime, bufferData[index] / 1, encodedData);
+            }
+        }
+
+        currentTime += secondsPerNote;
+    }
+
+    for(int i = 0; i < size; ++i) {
+    }
+
+    std::cout << "\n";
+
+    return true;
+}
+
+bool AudioBuffer::encodeFreq(int frequency, float duration, float timeOffset, float amplitude, std::vector<float>& encodedData) {
+    double secondsPerSample = 1 / this->frequencyRate;
+    int samplesCount = duration * this->frequencyRate;
+    int indexBase = (timeOffset / length) * size;
+
+    for(int i = 0; i < samplesCount; ++i) {
+        double time = (secondsPerSample * i) + timeOffset;
+        double y = amplitude * std::cos((2 * 3.14159) * frequency * time);
+        int indexInBuffer = indexBase + i;
+    
+        //encode y in buffer
+        encodedData[indexInBuffer] += y;
+    }
+
+    return true;
 }

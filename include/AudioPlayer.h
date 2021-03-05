@@ -21,7 +21,7 @@ class AudioBuffer {
         ~AudioBuffer();
 
         bool loadAudioWAV(const std::string& wavFile);
-        //void loadBufferData()
+        bool loadSpectograph(char* data, int width, int height, int minFreq, int maxFreq, float time);
 
         char* getData() const {
             return data;
@@ -54,6 +54,8 @@ class AudioBuffer {
         }
 
     private:
+        bool encodeFreq(int frequency, float duration, float timeOffset, float amplitude, std::vector<float>& encodedData);
+
         ALuint buffer;
         char* data;
         int bitRate;
@@ -131,6 +133,10 @@ class AudioPlayer {
             return volume;
         }
         
+        ALuint getSource() {
+            return source;
+        }
+
     private:
         ALCdevice* device;
         ALCcontext* deviceContext;

@@ -2,21 +2,40 @@
 #include "AudioPlayer.h"
 
 int main() {
-    AudioPlayer audioPlayer;
+    char spectograph[] {
+        1,0,0,0,0,0,0,0,0,0,0,
+        0,1,0,0,0,0,0,0,0,0,0,
+        0,0,1,0,0,0,0,0,0,0,0,
+        0,0,0,1,0,0,0,0,0,0,0,
+        0,0,0,0,1,0,0,0,0,0,0,
+        0,0,0,0,0,1,0,0,0,0,0,
+        0,0,0,0,0,0,1,0,0,0,0,
+        0,0,0,0,0,0,0,1,0,0,0,
+        0,0,0,0,0,0,0,0,1,0,0,
+        0,0,0,0,0,0,0,0,0,1,0,
+        0,0,0,0,0,0,0,0,0,0,1,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0
+    };
+
     AudioBuffer audio;
-    AudioBuffer audio2;
+    AudioPlayer audioPlayer;
 
     if(audioPlayer.init(NULL) != AudioPlayerInitStatus::AUDIO_PLAYER_LOAD_SUCCESS) {
         std::cout << "failed to load audio player\n";
     }
-
-    audio.loadAudioWAV("./test.wav");
-    audio2.loadAudioWAV("./bloop.wav");
+    
+    audio.loadSpectograph(spectograph, 11, 22, 100, 1000, .1);
 
     audioPlayer.playAudio(audio);
-
-    while(audioPlayer.isPlaying());
-
-    audioPlayer.playAudio(audio2);
     while(audioPlayer.isPlaying());
 }
