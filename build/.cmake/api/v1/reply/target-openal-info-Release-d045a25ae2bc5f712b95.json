@@ -1,0 +1,190 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "openal-soft/Release/openal-info.exe"
+		},
+		{
+			"path" : "openal-soft/Release/openal-info.pdb"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"install",
+			"target_link_libraries",
+			"target_compile_options",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"openal-soft/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1424,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 1595,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 1427,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 1426,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 1425,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "/DWIN32 /D_WINDOWS /O2 /Ob2 /DNDEBUG -MD"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "/W4"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "/w14640"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "/wd4065"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "/wd4268"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "/wd4324"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "/wd5030"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 5,
+					"path" : "C:/Users/Bryce/Documents/ImageData/openal-soft/common"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "C:/Users/Bryce/Documents/ImageData/openal-soft/include"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "OpenAL::@9037191f12c8ede7fbae"
+		}
+	],
+	"id" : "openal-info::@9037191f12c8ede7fbae",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "bin"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "C:/Program Files (x86)/PI"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "/DWIN32 /D_WINDOWS /O2 /Ob2 /DNDEBUG -MD",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "/machine:x64 /INCREMENTAL:NO /subsystem:console",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "Release\\OpenAL32.lib",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib",
+				"role" : "libraries"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "openal-info",
+	"nameOnDisk" : "openal-info.exe",
+	"paths" : 
+	{
+		"build" : "openal-soft",
+		"source" : "openal-soft"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "openal-soft/utils/openal-info.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

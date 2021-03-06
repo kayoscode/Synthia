@@ -8,24 +8,14 @@
 #include <iostream>
 #include <algorithm>
 
+#include "Song.h"
+
 enum class AudioPlayerInitStatus {
     AUDIO_PLAYER_LOAD_SUCCESS,
     AUDIO_PLAYER_DEVICE_LOAD_FAILED,
     AUDIO_PLAYER_CONTEXT_LOAD_FAILED,
     AUDIO_PLAYER_SOURCE_GEN_FAILED
 };
-
-enum Notes {
-    C, CSH, D, DSH, E, F, FSH, G, GSH, A, ASH, B, NOTE_COUNT
-};
-
-enum Octaves {
-    OCTAVE_0, OCTAVE1, OCTAVE2, OCTAVE3, OCTAVE4, OCTAVE5, OCTAVE6, OCTAVE7, OCTAVE8, OCTAVE_COUNT
-};
-
-double noteFrequencies[][NOTE_COUNT];
-
-#define NOTE(note, oct) noteFrequencies[oct][note]
 
 class AudioBuffer {
     public:
@@ -34,7 +24,8 @@ class AudioBuffer {
 
         bool loadAudioWAV(const std::string& wavFile);
         bool loadSpectograph(char* data, int width, int height, int minFreq, int maxFreq, double time);
-        bool loadSong(double* frequencies, double* durations, int size);
+        bool loadFrequencies(double* frequencies, double* durations, int size);
+        bool loadSong(Song& song);
 
         char* getData() const {
             return data;

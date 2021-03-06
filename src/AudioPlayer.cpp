@@ -1,18 +1,7 @@
 
 #include "AudioPlayer.h"
+#include <math.h>
 #include <fstream>
-
-double noteFrequencies[OCTAVE_COUNT][NOTE_COUNT] {
-    { 16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87 },
-    { 32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 49.00, 51.91, 55.00, 58.27, 61.74 },
-    { 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47 },
-    { 130.81, 138.59, 146.83, 155.56, 164.81, 174.61, 185.00, 196.00, 207.65, 220.00, 233.08, 246.94 },
-    { 261.63, 277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392.00, 415.30, 440.00, 466.16, 493.88 },
-    { 523.25, 554.37, 587.33, 622.25, 659.25, 698.46, 739.99, 783.99, 830.61, 880.00, 932.33, 987.77 },
-    { 1046.50, 1108.73, 1174.66, 1244.51, 1318.51, 1396.91, 1479.98, 1567.98, 1661.22, 1760.00, 1864.66, 1975.53 },
-    { 2093.00, 2217.46, 2349.32, 2489.02, 2637.02, 2793.83, 2959.96, 3135.96, 3322.44, 3520.00, 3729.31, 3951.07 },
-    { 4186.01, 4434.92, 4698.63, 4978.03, 5274.04, 5587.65, 5919.91, 6271.93, 6644.88, 7040.00, 7458.62, 7902.13 }
-};
 
 AudioPlayer::AudioPlayer()
     :device(NULL), 
@@ -200,7 +189,7 @@ bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int m
     this->length = time;
     this->bitRate = 16;
     this->channels = 1;
-    this->frequencyRate = 88 * 1000;
+    this->frequencyRate = 48 * 1000;
     int samplesCount = (frequencyRate) * time;
     this->size = (bitRate / 8) * samplesCount;
     this->data = new char[size];
@@ -260,10 +249,69 @@ bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int m
     return true;
 }
 
-bool AudioBuffer::loadSong(double* frequencies, double* durations, int count) {
+bool AudioBuffer::loadSong(Song& song) {
+    this->length = song.getDuration();
+    this->frequencyRate = 48 * 1000;
+    this->bitRate = 16;
+    this->channels = 1;
+    int samplesCount = (frequencyRate) * length;
+    this->size = (bitRate / 8) * samplesCount;
+    this->data = new char[size];
+    std::vector<double> encodedData(samplesCount);
+
+    for(int i = 0; i < encodedData.size(); ++i) {
+        encodedData[i] = 0;
+    }
+    
+    //load keyframe data into buffer
+    //gotta greatly improve the time for this operation - too slow
+    for(std::map<std::string, Part*>::iterator i = song.getParts()->begin(); i != song.getParts()->end(); ++i) {
+        Part* part = i->second;
+        std::map<unsigned int, Beat*>* keyframes = part->getKeyframes();
+
+        for(std::map<unsigned int, Beat*>::iterator j = keyframes->begin(); j != keyframes->end(); ++j) {
+            Beat* beat = j->second;
+
+            for(int x = 0; x < NOTE_COUNT; ++x) {
+                for(int y = 0; y < OCTAVE_COUNT; ++y) {
+                    for(int z = 0; z < MAX_FRACTIONAL_BEAT; ++z) {
+                        if(beat->notes[x][y][z] > 0) {
+                            int rawStart = j->first;
+                            int rawDuration = beat->notes[x][y][z] / MAX_FRACTIONAL_BEAT;
+                            int fractionalDuration = (beat->notes[x][y][z] % MAX_FRACTIONAL_BEAT);
+
+                            double duration = song.getTimeSignatureBottom() * (rawDuration + fractionalDuration / (double)MAX_FRACTIONAL_BEAT);
+                            double start = song.getTimeSignatureBottom() * (rawStart + (z / (double)MAX_FRACTIONAL_BEAT));
+                            start = 1 / (song.getBPM() / start) * 60;
+                            duration = 1 / (song.getBPM() / duration) * 60;
+
+                            int startIndex = (start / length) * samplesCount;
+                            encodeFreq(NOTE(x, y), duration, start, startIndex, 1, encodedData);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    normalizeAmp(encodedData);
+
+    for(int i = 0; i < encodedData.size(); ++i) {
+        short value = 0x7FFF * encodedData[i];
+        short* d = (short*)data;
+        d[i] = value;
+    }
+
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, getFormat(), data, size, (ALsizei)frequencyRate);
+
+    return true;
+}
+
+bool AudioBuffer::loadFrequencies(double* frequencies, double* durations, int count) {
     this->length = 0;
-    this->frequencyRate = 48000;
-    this->bitRate = 8;
+    this->frequencyRate = 48 * 1000;
+    this->bitRate = 16;
     this->channels = 1;
 
     for(int i = 0; i < count; ++i) {
@@ -271,8 +319,8 @@ bool AudioBuffer::loadSong(double* frequencies, double* durations, int count) {
     }
 
     int samplesCount = (frequencyRate) * length;
-    this->size = samplesCount;
-    this->data = new char[bitRate / 8 * samplesCount];
+    this->size = (bitRate / 8) * samplesCount;
+    this->data = new char[size];
     std::vector<double> encodedData(samplesCount);
 
     for(int i = 0; i < encodedData.size(); ++i) {
@@ -280,17 +328,21 @@ bool AudioBuffer::loadSong(double* frequencies, double* durations, int count) {
     }
 
     double currentTime = 0;
+    int currentIndex = 0;
+    int currentAddr = 0;
 
     for(int i = 0; i < count; ++i) {
-        encodeFreq(frequencies[i], durations[i], currentTime, 1, 0, encodedData);
+        currentAddr = encodeFreq(frequencies[i], durations[i], currentTime, currentIndex, 1, encodedData);
         currentTime += durations[i];
+        currentIndex += currentAddr;
     }
 
     normalizeAmp(encodedData);
 
-    for(int i = 0; i < size; ++i) {
-        char value = 0x7F * encodedData[i];
-        data[(i) + 0] = value;
+    for(int i = 0; i < encodedData.size(); ++i) {
+        short value = 0x7FFF * encodedData[i];
+        short* d = (short*)data;
+        d[i] = value;
     }
 
     alGenBuffers(1, &buffer);
@@ -304,9 +356,31 @@ int AudioBuffer::encodeFreq(double frequency, double duration, double timeOffset
     int samplesCount = duration * this->frequencyRate;
     int indexBase = startIndex;
 
+    //attenuation = e^(-2x) cause I can't think of anything better right now
+    //x = time - timeOffset
+
     for(int i = 0; i < samplesCount; ++i) {
         double time = (secondsPerSample * i) + timeOffset;
-        double y = amplitude * std::sin((2 * (double)3.141592653) * frequency * time);
+        double attDiff = (secondsPerSample * i);
+        amplitude = std::exp(-(attDiff * 1.5));
+
+        if(i > (samplesCount * .90)) {
+            double t = (i / (double)samplesCount);
+            t -= .90;
+            t /= (1 -.90);
+            t = 1 - t;
+
+            amplitude *= t;
+        }
+        else if(i < (samplesCount * .003)) {
+            double maxAmp = std::exp(-(.003 * 1.5));
+            double t = (i / (double)samplesCount);
+            t /= .003;
+
+            amplitude = t * maxAmp;
+        }
+
+        double y = amplitude * std::cos((2 * (double)3.141592653) * frequency * time);
         int indexInBuffer = indexBase + i;
     
         //encode y in buffer

@@ -309,7 +309,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Bryce\Documents\ImageData\include\AudioPlayer.h" />
+    <ClInclude Include="C:\Users\Bryce\Documents\ImageData\include\Song.h" />
     <ClCompile Include="C:\Users\Bryce\Documents\ImageData\src\AudioPlayer.cpp" />
+    <ClCompile Include="C:\Users\Bryce\Documents\ImageData\src\Song.cpp" />
     <ClCompile Include="C:\Users\Bryce\Documents\ImageData\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>

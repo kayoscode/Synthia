@@ -4,12 +4,18 @@
     <ClCompile Include="C:\Users\Bryce\Documents\ImageData\src\AudioPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Bryce\Documents\ImageData\src\Song.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\Bryce\Documents\ImageData\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Bryce\Documents\ImageData\include\AudioPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Bryce\Documents\ImageData\include\Song.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
