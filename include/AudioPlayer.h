@@ -15,14 +15,26 @@ enum class AudioPlayerInitStatus {
     AUDIO_PLAYER_SOURCE_GEN_FAILED
 };
 
+enum Notes {
+    C, CSH, D, DSH, E, F, FSH, G, GSH, A, ASH, B, NOTE_COUNT
+};
+
+enum Octaves {
+    OCTAVE_0, OCTAVE1, OCTAVE2, OCTAVE3, OCTAVE4, OCTAVE5, OCTAVE6, OCTAVE7, OCTAVE8, OCTAVE_COUNT
+};
+
+double noteFrequencies[][NOTE_COUNT];
+
+#define NOTE(note, oct) noteFrequencies[oct][note]
+
 class AudioBuffer {
     public:
         AudioBuffer();
         ~AudioBuffer();
 
         bool loadAudioWAV(const std::string& wavFile);
-        bool loadSpectograph(char* data, int width, int height, int minFreq, int maxFreq, float time);
-        bool loadSong(int* frequencies, float* durations, int size);
+        bool loadSpectograph(char* data, int width, int height, int minFreq, int maxFreq, double time);
+        bool loadSong(double* frequencies, double* durations, int size);
 
         char* getData() const {
             return data;
@@ -50,20 +62,20 @@ class AudioBuffer {
 
         ALenum getFormat() const;
 
-        float getLength() const {
+        double getLength() const {
             return length;
         }
 
     private:
-        bool encodeFreq(int frequency, float duration, float timeOffset, float amplitude, std::vector<float>& encodedData);
+        int encodeFreq(double frequency, double duration, double timeOffset, int startIndex, double amplitude, std::vector<double>& encodedData);
 
         ALuint buffer;
         char* data;
         int bitRate;
-        float frequencyRate;
+        double frequencyRate;
         int size;
         int channels;
-        float length;
+        double length;
 };
 
 class AudioPlayer {

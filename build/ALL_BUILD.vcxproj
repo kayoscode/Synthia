@@ -169,9 +169,25 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+    <ProjectReference Include="C:\Users\Bryce\Documents\ImageData\build\openal-soft\OpenAL.vcxproj">
+      <Project>{5E17F2F3-1523-3B17-A716-AD747331DAB2}</Project>
+      <Name>OpenAL</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\Bryce\Documents\ImageData\build\PI.vcxproj">
       <Project>{B6CE9C15-DE9D-303B-B611-246EF13346A5}</Project>
       <Name>PI</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Bryce\Documents\ImageData\build\openal-soft\alrecord.vcxproj">
+      <Project>{1A200C68-6C74-395F-878C-40BF06771414}</Project>
+      <Name>alrecord</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Bryce\Documents\ImageData\build\openal-soft\altonegen.vcxproj">
+      <Project>{B12BE711-8BA6-39AD-BAE0-875B0EE3E68D}</Project>
+      <Name>altonegen</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Bryce\Documents\ImageData\build\openal-soft\openal-info.vcxproj">
+      <Project>{28D6D690-457E-3AF2-9A8D-C6CABA52CF90}</Project>
+      <Name>openal-info</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

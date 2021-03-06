@@ -1,0 +1,24 @@
+^C:\USERS\BRYCE\DOCUMENTS\IMAGEDATA\BUILD\CMAKEFILES\E83C22B21F9D87A993C35C713B0C6937\HRTF_DEFAULT.H.RULE
+setlocal
+cd C:\Users\Bryce\Documents\ImageData\openal-soft
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -D "INPUT_FILE=C:/Users/Bryce/Documents/ImageData/openal-soft/hrtf/Default HRTF.mhr" -D OUTPUT_FILE=C:/Users/Bryce/Documents/ImageData/build/openal-soft/hrtf_default.h -D VARIABLE_NAME=hrtf_default -P C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/bin2h.script.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\BRYCE\DOCUMENTS\IMAGEDATA\OPENAL-SOFT\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Bryce/Documents/ImageData -BC:/Users/Bryce/Documents/ImageData/build --check-stamp-file C:/Users/Bryce/Documents/ImageData/build/openal-soft/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

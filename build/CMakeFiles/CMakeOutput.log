@@ -117,3 +117,224 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
 
 
+Performing C++ SOURCE FILE Test HAVE___RESTRICT succeeded with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_e4103.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  src.cxx
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D HAVE___RESTRICT /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_e4103.dir\Debug\\" /Fd"cmTC_e4103.dir\Debug\vc142.pdb" /Gd /TP /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\src.cxx
+  cmTC_e4103.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_e4103.exe
+
+
+Source file was:
+int *__restrict foo;
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAVE_PERMISSIVE_SWITCH succeeded with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_cec7f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  src.cxx
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D HAVE_PERMISSIVE_SWITCH /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_cec7f.dir\Debug\\" /Fd"cmTC_cec7f.dir\Debug\vc142.pdb" /Gd /TP /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\src.cxx
+  cmTC_cec7f.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_cec7f.exe
+
+
+Source file was:
+int main() { return 0; }
+Determining if the include file xmmintrin.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_3684e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3684e.dir\Debug\\" /Fd"cmTC_3684e.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_3684e.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_3684e.exe
+
+
+
+Determining if the include file emmintrin.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_ab0ed.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_ab0ed.dir\Debug\\" /Fd"cmTC_ab0ed.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_ab0ed.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_ab0ed.exe
+
+
+
+Determining if the include file pmmintrin.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_e35a0.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e35a0.dir\Debug\\" /Fd"cmTC_e35a0.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_e35a0.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_e35a0.exe
+
+
+
+Determining if the include file smmintrin.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_d75c9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d75c9.dir\Debug\\" /Fd"cmTC_d75c9.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_d75c9.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_d75c9.exe
+
+
+
+Performing C SOURCE FILE Test HAVE_SSE_INTRINSICS succeeded with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_dc1ab.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  src.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D HAVE_SSE_INTRINSICS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_dc1ab.dir\Debug\\" /Fd"cmTC_dc1ab.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\src.c
+  cmTC_dc1ab.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_dc1ab.exe
+
+
+Source file was:
+#include <emmintrin.h>
+        int main() {_mm_pause(); return 0;}
+Determining if the include file malloc.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_850ab.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_850ab.dir\Debug\\" /Fd"cmTC_850ab.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_850ab.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_850ab.exe
+
+
+
+Determining if the include file intrin.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_b686f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b686f.dir\Debug\\" /Fd"cmTC_b686f.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_b686f.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_b686f.exe
+
+
+
+Determining if the include file guiddef.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_a1bdb.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a1bdb.dir\Debug\\" /Fd"cmTC_a1bdb.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_a1bdb.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_a1bdb.exe
+
+
+
+Performing C SOURCE FILE Test HAVE_CPUID_INTRINSIC succeeded with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_9e42c.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  src.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D HAVE_CPUID_INTRINSIC /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9e42c.dir\Debug\\" /Fd"cmTC_9e42c.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\src.c
+  cmTC_9e42c.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_9e42c.exe
+
+
+Source file was:
+#include <intrin.h>
+        int main()
+        {
+            int regs[4];
+            __cpuid(regs, 0);
+            return regs[0];
+        }
+Determining if the _aligned_malloc exist passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_973aa.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckSymbolExists.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_973aa.dir\Debug\\" /Fd"cmTC_973aa.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckSymbolExists.c
+  cmTC_973aa.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_973aa.exe
+
+
+File C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <malloc.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef _aligned_malloc
+  return ((int*)(&_aligned_malloc))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the include file dsound.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_fae50.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fae50.dir\Debug\\" /Fd"cmTC_fae50.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_fae50.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_fae50.exe
+
+
+
+Determining if the include file mmdeviceapi.h exists passed with the following output:
+Change Dir: C:/Users/Bryce/Documents/ImageData/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_b5ad1.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.4.0+e901037fe for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28315 for x64
+  CheckIncludeFile.c
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b5ad1.dir\Debug\\" /Fd"cmTC_b5ad1.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  cmTC_b5ad1.vcxproj -> C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\CMakeTmp\Debug\cmTC_b5ad1.exe
+
+
+
