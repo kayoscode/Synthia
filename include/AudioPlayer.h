@@ -22,6 +22,7 @@ class AudioBuffer {
 
         bool loadAudioWAV(const std::string& wavFile);
         bool loadSpectograph(char* data, int width, int height, int minFreq, int maxFreq, float time);
+        bool loadSong(int* frequencies, float* durations, int size);
 
         char* getData() const {
             return data;

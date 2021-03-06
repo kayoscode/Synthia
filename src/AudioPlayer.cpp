@@ -172,7 +172,7 @@ ALenum AudioBuffer::getFormat() const {
 
 bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int minFreq, int maxFreq, float time) {
     this->length = time;
-    this->bitRate = 16;
+    this->bitRate = 8;
     this->channels = 1;
     this->frequencyRate = 48 * 1000;
     int samplesCount = (frequencyRate) * length;
@@ -205,7 +205,7 @@ bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int m
             float signalFrequency = frequencies[j];
 
             if(bufferData[index] > 0) {
-                encodeFreq(signalFrequency, secondsPerNote, currentTime, bufferData[index] / 1, encodedData);
+                encodeFreq(1400, secondsPerNote, currentTime, bufferData[index] / 1, encodedData);
             }
         }
 
@@ -213,9 +213,50 @@ bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int m
     }
 
     for(int i = 0; i < size; ++i) {
+        char value = 0x7F * encodedData[i];
+        //data[(2 * i) + 1] = value & 0xFF;
+        data[(i) + 0] = value;
     }
 
-    std::cout << "\n";
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, getFormat(), data, size, (ALsizei)frequencyRate);
+
+    return true;
+}
+
+bool AudioBuffer::loadSong(int* frequencies, float* durations, int size) {
+    this->length = 0;
+    this->frequencyRate = 48 * 1000;
+    this->bitRate = 8;
+    this->channels = 1;
+
+    for(int i = 0; i < size; ++i) {
+        this->length += durations[i];
+    }
+
+    int samplesCount = (frequencyRate) * length;
+    this->size = samplesCount;
+    this->data = new char[bitRate / 8 * samplesCount];
+    std::vector<float> encodedData(samplesCount);
+
+    for(int i = 0; i < encodedData.size(); ++i) {
+        encodedData[i] = 0;
+    }
+
+    float currentTime = 0;
+
+    for(int i = 0; i < size; ++i) {
+        encodeFreq(frequencies[i], durations[i], currentTime, 1, encodedData);
+        currentTime += durations[i];
+    }
+
+    for(int i = 0; i < size; ++i) {
+        char value = 0x7F * encodedData[i];
+        data[(i) + 0] = value;
+    }
+
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, getFormat(), data, size, (ALsizei)frequencyRate);
 
     return true;
 }
@@ -231,7 +272,7 @@ bool AudioBuffer::encodeFreq(int frequency, float duration, float timeOffset, fl
         int indexInBuffer = indexBase + i;
     
         //encode y in buffer
-        encodedData[indexInBuffer] += y;
+        encodedData[indexInBuffer] = y;
     }
 
     return true;
