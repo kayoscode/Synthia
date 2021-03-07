@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Bryce\Documents\ImageData\build\CMakeFiles\68e585fc87307a6887ea1c3669ac8168\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{678F3818-4746-3A80-9EE5-913BA57A2427}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
