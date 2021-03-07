@@ -15,12 +15,10 @@ int main() {
     }
 
     timer.reset();
-    createFurElise(song);
+    createMainTheme(song);
     std::cout << song.getDuration() << "\n";
-
-    std::cout << "Loaded song - took : " << timer.milliseconds() << " milliseconds\n";
-
     audio.loadSong(song);
+    std::cout << "Loaded song - took : " << timer.milliseconds() << " milliseconds\n";
 
     audioPlayer.playAudio(audio);
     while(audioPlayer.isPlaying());

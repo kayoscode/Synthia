@@ -9,7 +9,7 @@
 
 #define NOTE(note, oct) noteFrequencies[oct][note]
 #define BEAT_SUBDIVIDE 128
-#define ARPEGGIO_OFFSET 4
+#define ARPEGGIO_OFFSET (rand() % 16)
 
 #define WHOLE_NOTE 1
 #define HALF_NOTE 2
@@ -40,6 +40,7 @@ enum NoteEffects {
 enum BeatEffects {
     BEAT_FX_NONE = 0,
     BEAT_FX_ARPEGGIO = 1,
+    BEAT_FX_SLUR = 2,
 };
 
 enum Instrument {
@@ -131,7 +132,7 @@ class Part {
             return addNote(start, note, octave, calculateBeat(beatCount, fractionalBeat), noteFX);
         }
 
-        void enableBeatEffects(unsigned int start, unsigned int beatEffects);
+        void enableBeatEffects(unsigned int beatEffects);
 
         /**
          * If you have n notes that need to

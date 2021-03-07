@@ -4,6 +4,301 @@
 
 #include "Song.h"
 
+extern void createMainTheme(Song& song) {
+    song.setBPM(55);
+    song.setTimeSignature(3, 4);
+
+    Part* part = song.addPart("piano1", Instrument::PIANO);
+    int indexTrebel = BEAT(0, 0);
+    int indexBass = BEAT(0, 0);
+
+    //measure 1
+    //part->enableBeatEffects(BeatEffects::BEAT_FX_SLUR);
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE6);
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE6);
+    indexTrebel = part->addEightNote(indexTrebel, D, OCTAVE6);
+    indexTrebel = part->addEightNote(indexTrebel, DSH, OCTAVE6);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE4);
+    indexBass = part->addHalfNote(indexBass, GSH, OCTAVE4);
+
+    //measure2
+    indexTrebel = part->addHalfNote(indexTrebel, D, OCTAVE6, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE4);
+    indexBass = part->addHalfNote(indexBass, G, OCTAVE4);
+
+    //measure 3
+    indexTrebel = part->addEightNote(indexTrebel, C, OCTAVE6);
+    indexTrebel = part->addEightNote(indexTrebel, G, OCTAVE5);
+    indexTrebel = part->addQuarterNote(indexTrebel, GSH, OCTAVE5);
+    indexTrebel = part->addEightNote(indexTrebel, G, OCTAVE5);
+    indexTrebel = part->addEightNote(indexTrebel, F, OCTAVE5);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE4);
+    indexBass = part->addHalfNote(indexBass, F, OCTAVE4);
+
+    //measure 4
+    indexTrebel = part->addHalfNote(indexTrebel, G, OCTAVE5, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, D, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, D, OCTAVE4);
+    indexBass = part->addQuarterNote(indexBass, ASH, OCTAVE3);
+
+    //measure 5
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE6);
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE6);
+    indexTrebel = part->addEightNote(indexTrebel, D, OCTAVE6);
+    indexTrebel = part->addEightNote(indexTrebel, DSH, OCTAVE6);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE4);
+    indexBass = part->addHalfNote(indexBass, GSH, OCTAVE4);
+
+    //measure 6
+    indexTrebel = part->addHalfNote(indexTrebel, F, OCTAVE6, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, ASH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE4);
+    indexBass = part->addHalfNote(indexBass, F, OCTAVE4);
+
+    //measure 7
+    indexTrebel = part->addEightNote(indexTrebel, G, OCTAVE6);
+    indexTrebel = part->addEightNote(indexTrebel, DSH, OCTAVE6);
+    indexTrebel = part->addEightNote(indexTrebel, D, OCTAVE6);
+    indexTrebel = part->addEightNote(indexTrebel, C, OCTAVE6);
+    indexTrebel = part->addQuarterNote(indexTrebel, ASH, OCTAVE5);
+
+    indexBass = part->addEightNote(indexBass, GSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE4);
+    indexBass = part->addHalfNote(indexBass, F, OCTAVE4);
+
+    //measure 8
+    indexTrebel = part->addHalfNote(indexTrebel, C, OCTAVE6, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, ASH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, C, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, C, OCTAVE4);
+    indexBass = part->addEightNote(indexBass, ASH, OCTAVE3);
+
+    //measure 9
+    indexTrebel = part->addHalfNote(indexTrebel, HOLD, OCTAVE6, NoteEffects::NOTE_FX_EXTEND);
+
+    part->enableBeatEffects(BeatEffects::BEAT_FX_ARPEGGIO);
+    part->addHalfNote(indexBass, D, OCTAVE3);
+    part->addHalfNote(indexBass, F, OCTAVE3);
+    part->addHalfNote(indexBass, C, OCTAVE4);
+    indexBass = part->addHalfNote(indexBass, F, OCTAVE4);
+    part->enableBeatEffects(0);
+    indexBass = part->addQuarterNote(indexBass, DSH, OCTAVE3);
+
+    //measure 10
+    part->addQuarterNote(indexTrebel, C, OCTAVE5);
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE4);
+    part->addQuarterNote(indexTrebel, C, OCTAVE5);
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE4);
+    part->addEightNote(indexTrebel, D, OCTAVE5);
+    indexTrebel = part->addEightNote(indexTrebel, D, OCTAVE4);
+    part->addEightNote(indexTrebel, DSH, OCTAVE5);
+    indexTrebel = part->addEightNote(indexTrebel, DSH, OCTAVE4);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addHalfNote(indexBass, GSH, OCTAVE3);
+
+    //measure 11
+    part->addHalfNote(indexTrebel, D, OCTAVE5, NoteEffects::NOTE_FX_EXTEND);
+    indexTrebel = part->addHalfNote(indexTrebel, D, OCTAVE4, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addHalfNote(indexBass, G, OCTAVE3);
+
+    //measure 12
+    part->addEightNote(indexTrebel, C, OCTAVE5);
+    indexTrebel = part->addEightNote(indexTrebel, C, OCTAVE4);
+    part->addEightNote(indexTrebel, G, OCTAVE4);
+    indexTrebel = part->addEightNote(indexTrebel, G, OCTAVE3);
+    part->addQuarterNote(indexTrebel, GSH, OCTAVE4);
+    indexTrebel = part->addQuarterNote(indexTrebel, GSH, OCTAVE3);
+    part->addEightNote(indexTrebel, G, OCTAVE4);
+    indexTrebel = part->addEightNote(indexTrebel, G, OCTAVE3);
+    part->addEightNote(indexTrebel, F, OCTAVE4);
+    indexTrebel = part->addEightNote(indexTrebel, F, OCTAVE3);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+    indexBass = part->addQuarterNote(indexBass, F, OCTAVE3);
+    indexBass = part->addQuarterNote(indexBass, HOLD, OCTAVE5);
+
+    //measure 13
+    part->addHalfNote(indexTrebel, G, OCTAVE4, NoteEffects::NOTE_FX_EXTEND);
+    indexTrebel = part->addHalfNote(indexTrebel, G, OCTAVE3, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, ASH, OCTAVE2);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+    indexBass = part->addQuarterNote(indexBass, D, OCTAVE3);
+    indexBass = part->addQuarterNote(indexBass, ASH, OCTAVE2);
+
+    //measure 14
+    part->addQuarterNote(indexTrebel, C, OCTAVE5);
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE4);
+    part->addQuarterNote(indexTrebel, C, OCTAVE5);
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE4);
+    part->addEightNote(indexTrebel, D, OCTAVE5);
+    indexTrebel = part->addEightNote(indexTrebel, D, OCTAVE4);
+    part->addEightNote(indexTrebel, DSH, OCTAVE5);
+    indexTrebel = part->addEightNote(indexTrebel, DSH, OCTAVE4);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addHalfNote(indexBass, GSH, OCTAVE3);
+
+    //measure 15
+    part->addHalfNote(indexTrebel, F, OCTAVE5);
+    indexTrebel = part->addHalfNote(indexTrebel, F, OCTAVE4);
+    indexTrebel = part->addEightNote(indexTrebel, HOLD, OCTAVE5);
+    part->add16Note(indexTrebel, G, OCTAVE5);
+    indexTrebel = part->add16Note(indexTrebel, G, OCTAVE4);
+    part->add16Note(indexTrebel, GSH, OCTAVE5);
+    indexTrebel = part->add16Note(indexTrebel, GSH, OCTAVE4);
+
+    indexBass = part->addEightNote(indexBass, F, OCTAVE2);
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, GSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, C, OCTAVE4);
+
+    //measure 16
+    part->addQuarterNote(indexTrebel, G, OCTAVE5);
+    indexTrebel = part->addQuarterNote(indexTrebel, G, OCTAVE4);
+    part->addQuarterNote(indexTrebel, DSH, OCTAVE5, NoteEffects::NOTE_FX_EXTEND);
+    indexTrebel = part->addQuarterNote(indexTrebel, DSH, OCTAVE4, NoteEffects::NOTE_FX_EXTEND);
+    part->addEightNote(indexTrebel, ASH, OCTAVE4);
+    indexTrebel = part->addEightNote(indexTrebel, ASH, OCTAVE3);
+
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE2);
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addQuarterNote(indexBass, C, OCTAVE4);
+
+    //measure 17
+    part->addQuarterNote(indexTrebel, C, OCTAVE5);
+    indexTrebel = part->addQuarterNote(indexTrebel, C, OCTAVE4);
+    part->addQuarterNote(indexTrebel, ASH, OCTAVE4, NoteEffects::NOTE_FX_EXTEND);
+    indexTrebel = part->addQuarterNote(indexTrebel, ASH, OCTAVE3, NoteEffects::NOTE_FX_EXTEND);
+    indexTrebel = part->addEightNote(indexTrebel, F, OCTAVE4);
+
+    indexBass = part->addEightNote(indexBass, GSH, OCTAVE2);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, ASH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addQuarterNote(indexBass, D, OCTAVE3);
+
+    //measure 18
+    indexTrebel = part->addQuarterNote(indexTrebel, G, OCTAVE4);
+    indexTrebel = part->addHalfNote(indexTrebel, C, OCTAVE4);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, GSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, GSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+
+    //measure 19
+    indexTrebel = part->addHalfNote(indexTrebel, G, OCTAVE6, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    
+    //measure 20
+    indexTrebel = part->addHalfNote(indexTrebel, G, OCTAVE4, NoteEffects::NOTE_FX_EXTEND | NoteEffects::NOTE_FX_DIMINUENDO);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+
+    //measure 21
+    indexTrebel = part->addHalfNote(indexTrebel, G, OCTAVE4, NoteEffects::NOTE_FX_DIMINUENDO);
+    indexTrebel = part->addEightNote(indexTrebel, HOLD, OCTAVE4, NoteEffects::NOTE_FX_DIMINUENDO);
+    indexTrebel = part->addEightNote(indexTrebel, B, OCTAVE4, NoteEffects::NOTE_FX_DIMINUENDO);
+
+    part->enableBeatEffects(BeatEffects::BEAT_FX_ARPEGGIO);
+    part->addQuarterNote(indexBass, F, OCTAVE2);
+    part->addQuarterNote(indexBass, ASH, OCTAVE2);
+    indexBass = part->addQuarterNote(indexBass, D, OCTAVE3);
+    part->enableBeatEffects(0);
+    indexBass = part->addQuarterNote(indexBass, F, OCTAVE2);
+    part->addQuarterNote(indexBass, ASH, OCTAVE2);
+    indexBass = part->addQuarterNote(indexBass, D, OCTAVE3);
+
+    //measure 22
+    indexTrebel = part->addHalfNote(indexTrebel, B, OCTAVE4, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, GSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, GSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+
+    //measure 23
+    indexTrebel = part->addHalfNote(indexTrebel, C, OCTAVE5);
+    indexTrebel = part->addNote(indexTrebel, HOLD, OCTAVE5, part->getNoteFractionalDuration(3, 1, QUATER_NOTE));
+    indexTrebel = part->addNote(indexTrebel, D, OCTAVE5, part->getNoteFractionalDuration(3, 2, QUATER_NOTE));
+    indexTrebel = part->addNote(indexTrebel, DSH, OCTAVE5, part->getNoteFractionalDuration(3, 3, QUATER_NOTE));
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, G, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+
+    //measure 24
+    indexTrebel = part->addHalfNote(indexTrebel, F, OCTAVE5, NoteEffects::NOTE_FX_EXTEND);
+
+    indexBass = part->addEightNote(indexBass, C, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, DSH, OCTAVE3);
+
+    //measure 25
+    indexTrebel = part->addHalfNote(indexTrebel, G, OCTAVE5);
+    indexTrebel = part->addQuarterNote(indexTrebel, ASH, OCTAVE5);
+
+    indexBass = part->addEightNote(indexBass, ASH, OCTAVE2);
+    indexBass = part->addEightNote(indexBass, D, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, ASH, OCTAVE3);
+    indexBass = part->addQuarterNote(indexBass, D, OCTAVE4);
+
+    //measure 26
+    indexTrebel = part->addHalfNote(indexTrebel, C, OCTAVE6, NoteEffects::NOTE_FX_EXTEND);
+    indexBass = part->addHalfNote(indexBass, C, OCTAVE4, NoteEffects::NOTE_FX_EXTEND);
+
+    std::cout << indexTrebel << " " << indexBass << "\n";
+}
+
 extern void createDirtmouthTheme(Song& song) {
     song.setBPM(87);
     song.setTimeSignature(4, 4);
@@ -86,7 +381,7 @@ extern void createDirtmouthTheme(Song& song) {
     indexBass = part->addEightNote(indexBass, D, OCTAVE2);
     indexBass = part->addEightNote(indexBass, A, OCTAVE2);
     indexBass = part->addEightNote(indexBass, E, OCTAVE3);
-    indexBass = part->addEightNote(indexBass, F, OCTAVE3);
+    indexBass = part->addEightNote(indexBass, FSH, OCTAVE3);
     indexBass = part->addEightNote(indexBass, G, OCTAVE3);
     indexBass = part->addEightNote(indexBass, B, OCTAVE3);
     indexBass = part->addEightNote(indexBass, G, OCTAVE3);
@@ -240,11 +535,11 @@ extern void createDirtmouthTheme(Song& song) {
     indexBass = part->addQuarterNote(indexBass, B, OCTAVE3, NoteEffects::NOTE_FX_EXTEND);
 
     //measure 17
-    part->enableBeatEffects(indexTrebel, BeatEffects::BEAT_FX_ARPEGGIO);
+    part->enableBeatEffects(BeatEffects::BEAT_FX_ARPEGGIO);
     part->addWholeNote(indexTrebel, FSH, OCTAVE4);
     part->addWholeNote(indexTrebel, B, OCTAVE4);
     indexTrebel = part->addWholeNote(indexTrebel, FSH, OCTAVE5);
-    part->enableBeatEffects(indexTrebel, 0);
+    part->enableBeatEffects(0);
 
     indexBass = part->addEightNote(indexBass, E, OCTAVE2);
     indexBass = part->addEightNote(indexBass, B, OCTAVE2);

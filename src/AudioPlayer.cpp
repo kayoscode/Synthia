@@ -251,7 +251,7 @@ bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int m
 
 bool AudioBuffer::loadSong(Song& song) {
     this->length = song.getDuration();
-    this->frequencyRate = 48 * 1000;
+    this->frequencyRate = 28 * 1000;
     this->bitRate = 16;
     this->channels = 1;
     int samplesCount = (frequencyRate) * length;
@@ -297,10 +297,13 @@ bool AudioBuffer::loadSong(Song& song) {
                     }
 
                     if(noteFX & NoteEffects::NOTE_FX_DIMINUENDO) {
-                        volume -= volume * .10;
+                        volume -= volume * .5;
                     }
 
                     encodeFreq(NOTE(k->second[w].note, k->second[w].oct), duration, start, startIndex, volume, encodedData);
+                    encodeFreq(NOTE(k->second[w].note, k->second[w].oct)*2, duration, start, startIndex, volume * .5, encodedData);
+                    encodeFreq(NOTE(k->second[w].note, k->second[w].oct)*3, duration, start, startIndex, volume * .3, encodedData);
+                    encodeFreq(NOTE(k->second[w].note, k->second[w].oct)*4, duration, start, startIndex, volume * .1, encodedData);
                 }
             }
         }
@@ -377,10 +380,10 @@ int AudioBuffer::encodeFreq(double frequency, double duration, double timeOffset
         double attDiff = (secondsPerSample * i);
         amplitude = std::exp(-(attDiff * 2.0));
 
-        if(i > (samplesCount * .90)) {
+        if(i > (samplesCount * .94)) {
             double t = (i / (double)samplesCount);
-            t -= .90;
-            t /= (1 -.90);
+            t -= .94;
+            t /= (1 -.94);
             t = 1 - t;
 
             amplitude *= t;

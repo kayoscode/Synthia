@@ -71,10 +71,7 @@ unsigned int Part::addNote(unsigned int beat, Note note, Octave octave, unsigned
     return beat + durationBeats;
 }
 
-void Part::enableBeatEffects(unsigned int beat, unsigned int beatEffects) {
-    int rawBeat = beat / BEAT_SUBDIVIDE;
-    int fractional = beat % BEAT_SUBDIVIDE;
-
+void Part::enableBeatEffects(unsigned int beatEffects) {
     this->activeBeatFX = beatEffects;
     this->arpeggioCounter = 0;
 }
