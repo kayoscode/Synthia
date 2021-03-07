@@ -271,24 +271,36 @@ bool AudioBuffer::loadSong(Song& song) {
 
         for(std::map<unsigned int, Beat*>::iterator j = keyframes->begin(); j != keyframes->end(); ++j) {
             Beat* beat = j->second;
+            int rawStart = j->first;
+            float volume = 1;
 
-            for(int x = 0; x < NOTE_COUNT; ++x) {
-                for(int y = 0; y < OCTAVE_COUNT; ++y) {
-                    for(int z = 0; z < MAX_FRACTIONAL_BEAT; ++z) {
-                        if(beat->notes[x][y][z] > 0) {
-                            int rawStart = j->first;
-                            int rawDuration = beat->notes[x][y][z] / MAX_FRACTIONAL_BEAT;
-                            int fractionalDuration = (beat->notes[x][y][z] % MAX_FRACTIONAL_BEAT);
+            for(std::map<unsigned short, std::vector<NoteStruct>>::iterator k = beat->notes.begin(); k != beat->notes.end(); ++k) {
+                for(int w = 0; w < k->second.size(); ++w) {
+                    int rawDuration = k->second[w].duration / BEAT_SUBDIVIDE;
+                    int fractionalDuration = k->second[w].duration % BEAT_SUBDIVIDE;
+                    unsigned int noteFX = k->second[w].noteFX;
+                    unsigned int startOffset = k->second[w].startOffset;
+                    
+                    double duration = (rawDuration + fractionalDuration / (double)BEAT_SUBDIVIDE) - startOffset;
+                    double start = (rawStart + (k->first / (double)BEAT_SUBDIVIDE)) + startOffset;
+                    start = 1 / (song.getBPM() / start) * 60;
+                    duration = 1 / (song.getBPM() / duration) * 60;
 
-                            double duration = song.getTimeSignatureBottom() * (rawDuration + fractionalDuration / (double)MAX_FRACTIONAL_BEAT);
-                            double start = song.getTimeSignatureBottom() * (rawStart + (z / (double)MAX_FRACTIONAL_BEAT));
-                            start = 1 / (song.getBPM() / start) * 60;
-                            duration = 1 / (song.getBPM() / duration) * 60;
+                    int startIndex = (start / length) * samplesCount;
 
-                            int startIndex = (start / length) * samplesCount;
-                            encodeFreq(NOTE(x, y), duration, start, startIndex, 1, encodedData);
-                        }
+                    if(noteFX & NoteEffects::NOTE_FX_STACCATO) {
+                        duration /= 2;
                     }
+
+                    if(noteFX & NoteEffects::NOTE_FX_CRESCENDO) {
+                        volume += volume * .10;
+                    }
+
+                    if(noteFX & NoteEffects::NOTE_FX_DIMINUENDO) {
+                        volume -= volume * .10;
+                    }
+
+                    encodeFreq(NOTE(k->second[w].note, k->second[w].oct), duration, start, startIndex, volume, encodedData);
                 }
             }
         }
@@ -351,10 +363,11 @@ bool AudioBuffer::loadFrequencies(double* frequencies, double* durations, int co
     return true;
 }
 
-int AudioBuffer::encodeFreq(double frequency, double duration, double timeOffset, int startIndex, double amplitude, std::vector<double>& encodedData) {
+int AudioBuffer::encodeFreq(double frequency, double duration, double timeOffset, int startIndex, double volume, std::vector<double>& encodedData) {
     double secondsPerSample = 1 / (double)this->frequencyRate;
     int samplesCount = duration * this->frequencyRate;
     int indexBase = startIndex;
+    float amplitude = 0;
 
     //attenuation = e^(-2x) cause I can't think of anything better right now
     //x = time - timeOffset
@@ -362,7 +375,7 @@ int AudioBuffer::encodeFreq(double frequency, double duration, double timeOffset
     for(int i = 0; i < samplesCount; ++i) {
         double time = (secondsPerSample * i) + timeOffset;
         double attDiff = (secondsPerSample * i);
-        amplitude = std::exp(-(attDiff * 1.5));
+        amplitude = std::exp(-(attDiff * 2.0));
 
         if(i > (samplesCount * .90)) {
             double t = (i / (double)samplesCount);
@@ -372,15 +385,15 @@ int AudioBuffer::encodeFreq(double frequency, double duration, double timeOffset
 
             amplitude *= t;
         }
-        else if(i < (samplesCount * .003)) {
-            double maxAmp = std::exp(-(.003 * 1.5));
+        else if(i < (samplesCount * .008)) {
+            double maxAmp = std::exp(-(.008 * 2.0));
             double t = (i / (double)samplesCount);
-            t /= .003;
+            t /= .008;
 
             amplitude = t * maxAmp;
         }
 
-        double y = amplitude * std::cos((2 * (double)3.141592653) * frequency * time);
+        double y = volume * amplitude * std::cos((2 * (double)3.141592653) * frequency * time);
         int indexInBuffer = indexBase + i;
     
         //encode y in buffer

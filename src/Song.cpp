@@ -31,23 +31,37 @@ Part::~Part() {
     }
 }
 
-unsigned int Part::addNote(unsigned int beat, Note note, Octave octave, unsigned int durationBeats) {
-    int rawBeat = beat / MAX_FRACTIONAL_BEAT;
-    int fractional = beat % MAX_FRACTIONAL_BEAT;
+unsigned int Part::addNote(unsigned int beat, Note note, Octave octave, unsigned int durationBeats, unsigned int noteFX) {
+    //add note duration effects
+    if(noteFX & NoteEffects::NOTE_FX_EXTEND) {
+        durationBeats = durationBeats + (durationBeats / 2);
+    }
 
-    int rawDuration = durationBeats / MAX_FRACTIONAL_BEAT;
-    int fractionalDuration = durationBeats % MAX_FRACTIONAL_BEAT;
+    if(activeBeatFX & BeatEffects::BEAT_FX_ARPEGGIO) {
+        beat += arpeggioCounter;
+        durationBeats -= arpeggioCounter;
+        arpeggioCounter += ARPEGGIO_OFFSET;
+    }
+
+    int rawBeat = beat / BEAT_SUBDIVIDE;
+    int fractional = beat % BEAT_SUBDIVIDE;
+
+    int rawDuration = durationBeats / BEAT_SUBDIVIDE;
+    int fractionalDuration = durationBeats % BEAT_SUBDIVIDE;
 
     if(keyframes.find(rawBeat) == keyframes.end()) {
         keyframes[rawBeat] = new Beat();
     }
 
-    keyframes[rawBeat]->notes[note][octave][fractional] = durationBeats;
+    NoteStruct newNote;
+    newNote.duration = durationBeats;
+    newNote.note = note;
+    newNote.oct = octave;
+    newNote.noteFX = noteFX;
+
+    keyframes[rawBeat]->notes[fractional].push_back(newNote);
     
-    //update track time: TODO: this doesn't work because it's reliant on the "measure system" so for this to work it has to be 4/4 time.
-    //we can fix this in the future by simply counting n types of notes. Where the type of note is dictated by the number at the top of the time signature.
-    //tomorrow :D
-    double currentBeat = timeSigBottom * ((rawBeat + (fractional / (double)MAX_FRACTIONAL_BEAT)) + (rawDuration + fractionalDuration / (double)MAX_FRACTIONAL_BEAT));
+    double currentBeat = ((rawBeat + (fractional / (double)BEAT_SUBDIVIDE)) + (rawDuration + fractionalDuration / (double)BEAT_SUBDIVIDE));
     double minTime = 1 / (bpm / currentBeat) * 60;
 
     if(minTime > timeInSeconds) {
@@ -55,6 +69,14 @@ unsigned int Part::addNote(unsigned int beat, Note note, Octave octave, unsigned
     }
 
     return beat + durationBeats;
+}
+
+void Part::enableBeatEffects(unsigned int beat, unsigned int beatEffects) {
+    int rawBeat = beat / BEAT_SUBDIVIDE;
+    int fractional = beat % BEAT_SUBDIVIDE;
+
+    this->activeBeatFX = beatEffects;
+    this->arpeggioCounter = 0;
 }
 
 double Part::getDuration() const {

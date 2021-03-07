@@ -18,6 +18,9 @@
     <ClInclude Include="C:\Users\Bryce\Documents\ImageData\include\Song.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\Bryce\Documents\ImageData\include\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\Bryce\Documents\ImageData\CMakeLists.txt" />
