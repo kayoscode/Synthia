@@ -1,0 +1,33 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.18/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckCCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckCXXCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckCXXSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckFunctionExists.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckIncludeFiles.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckStructHasMember.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/CheckSymbolExists.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindGit.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindThreads.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/FindZLIB.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-3.18/Modules/SelectLibraryConfigurations.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/CMakeLists.txt
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindALSA.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindAudioIO.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindJACK.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindMySOFA.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindOSS.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindOpenSL.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindPortAudio.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindPulseAudio.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindSDL2.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindSndFile.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/cmake/FindSoundIO.cmake
+C:/Users/Bryce/Documents/ImageData/openal-soft/config.h.in
+C:/Users/Bryce/Documents/ImageData/openal-soft/openal.pc.in

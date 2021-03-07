@@ -1,0 +1,10 @@
+^C:\USERS\BRYCE\DOCUMENTS\IMAGEDATA\BUILD\CMAKEFILES\E9596E8EF0CA2CBD11973A91629EAB31\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Bryce/Documents/ImageData -BC:/Users/Bryce/Documents/ImageData/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Bryce/Documents/ImageData/build/PI.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
