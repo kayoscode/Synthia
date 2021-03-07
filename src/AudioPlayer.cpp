@@ -301,9 +301,6 @@ bool AudioBuffer::loadSong(Song& song) {
                     }
 
                     encodeFreq(NOTE(k->second[w].note, k->second[w].oct), duration, start, startIndex, volume, encodedData);
-                    encodeFreq(NOTE(k->second[w].note, k->second[w].oct)*2, duration, start, startIndex, volume * .5, encodedData);
-                    encodeFreq(NOTE(k->second[w].note, k->second[w].oct)*3, duration, start, startIndex, volume * .3, encodedData);
-                    encodeFreq(NOTE(k->second[w].note, k->second[w].oct)*4, duration, start, startIndex, volume * .1, encodedData);
                 }
             }
         }
@@ -396,11 +393,14 @@ int AudioBuffer::encodeFreq(double frequency, double duration, double timeOffset
             amplitude = t * maxAmp;
         }
 
-        double y = volume * amplitude * std::cos((2 * (double)3.141592653) * frequency * time);
         int indexInBuffer = indexBase + i;
     
         //encode y in buffer
-        encodedData[indexInBuffer] += y;
+        encodedData[indexInBuffer] += volume * amplitude * std::cos((2 * (double)3.141592653) * frequency * time);
+        encodedData[indexInBuffer] += .8 * volume * amplitude * std::cos((2 * (double)3.141592653) * frequency * 2 * time);
+        encodedData[indexInBuffer] += .5 * volume * amplitude * std::cos((2 * (double)3.141592653) * frequency * 3 * time);
+        encodedData[indexInBuffer] += .2 * volume * amplitude * std::cos((2 * (double)3.141592653) * frequency * 4 * time);
+        encodedData[indexInBuffer] += .1 * volume * amplitude * std::cos((2 * (double)3.141592653) * frequency * 5 * time);
     }
 
     return samplesCount;
