@@ -9,6 +9,7 @@
 #include <algorithm>
 
 #include "Song.h"
+#include "Synthesizer.h"
 
 enum class AudioPlayerInitStatus {
     AUDIO_PLAYER_LOAD_SUCCESS,
@@ -23,8 +24,7 @@ class AudioBuffer {
         ~AudioBuffer();
 
         bool loadAudioWAV(const std::string& wavFile);
-        bool loadSpectograph(char* data, int width, int height, int minFreq, int maxFreq, double time);
-        bool loadFrequencies(double* frequencies, double* durations, int size);
+        bool loadSpectograph(char* data, int width, int height, int minFreq, int maxFreq, float time);
         bool loadSong(Song& song);
 
         char* getData() const {
@@ -53,20 +53,21 @@ class AudioBuffer {
 
         ALenum getFormat() const;
 
-        double getLength() const {
+        float getLength() const {
             return length;
         }
 
     private:
-        int encodeFreq(double frequency, double duration, double timeOffset, int startIndex, double amplitude, std::vector<double>& encodedData);
+        int encodeFreq(float frequency, float duration, float timeOffset, int startIndex, float amplitude, std::vector<float>& encodedData);
 
+        Synthesizer synthesizer;
         ALuint buffer;
         char* data;
         int bitRate;
-        double frequencyRate;
+        float frequencyRate;
         int size;
         int channels;
-        double length;
+        float length;
 };
 
 class AudioPlayer {

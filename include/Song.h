@@ -7,9 +7,11 @@
 #include <string>
 #include <iostream>
 
+#include "Instrument.h"
+
 #define NOTE(note, oct) noteFrequencies[oct][note]
 #define BEAT_SUBDIVIDE 128
-#define ARPEGGIO_OFFSET (rand() % 16)
+#define ARPEGGIO_OFFSET (6)
 
 #define WHOLE_NOTE 1
 #define HALF_NOTE 2
@@ -27,7 +29,7 @@ enum Octave {
     OCTAVE_0, OCTAVE1, OCTAVE2, OCTAVE3, OCTAVE4, OCTAVE5, OCTAVE6, OCTAVE7, OCTAVE8, OCTAVE_COUNT
 };
 
-extern double noteFrequencies[OCTAVE_COUNT][NOTE_COUNT];
+extern float noteFrequencies[OCTAVE_COUNT][NOTE_COUNT];
 
 enum NoteEffects {
     NOTE_FX_NONE = 0,
@@ -41,11 +43,6 @@ enum BeatEffects {
     BEAT_FX_NONE = 0,
     BEAT_FX_ARPEGGIO = 1,
     BEAT_FX_SLUR = 2,
-};
-
-enum Instrument {
-    PURE_FREQ,
-    PIANO,
 };
 
 struct NoteStruct {
@@ -66,10 +63,11 @@ struct Beat {
 
 class Part {
     public:
-        Part(int bpm, int timeSigTop, int timeSigBottom) : 
+        Part(int bpm, int timeSigTop, int timeSigBottom, Instrument* instrument) : 
             bpm(bpm), 
             timeSigTop(timeSigTop), 
-            timeSigBottom(timeSigBottom)
+            timeSigBottom(timeSigBottom),
+            instrument(instrument)
         {}
 
         ~Part();
@@ -147,9 +145,9 @@ class Part {
         unsigned int getNoteFractionalDuration(unsigned int subDivisions, int noteIndex, int noteType) {
             unsigned int beatCount = timeSigBottom / noteType;
             unsigned int fractionalBeat = ((timeSigBottom % noteType) * (BEAT_SUBDIVIDE / noteType));
-            double totalBeats = beatCount + (fractionalBeat / (double)BEAT_SUBDIVIDE);
+            float totalBeats = beatCount + (fractionalBeat / (float)BEAT_SUBDIVIDE);
 
-            double duration = totalBeats / (double)subDivisions;
+            float duration = totalBeats / (float)subDivisions;
             unsigned int rawNoteLength = BEAT_SUBDIVIDE * duration;
 
             if(noteIndex < subDivisions) {
@@ -175,19 +173,27 @@ class Part {
         /**
          * Returns the duration of the song in seconds
          * */
-        double getDuration() const;
+        float getDuration() const;
 
         std::map<unsigned int, Beat*>* getKeyframes() {
             return &keyframes;
         }
 
+        Instrument* getInstrument() {
+            return instrument;
+        }
+
+        void setInstrument(Instrument* instrument) {
+            this->instrument = instrument;
+        }
+
     private:
-        Instrument instrument;
+        Instrument* instrument;
         std::map<unsigned int, Beat*> keyframes;
         int bpm;
         int timeSigTop;
         int timeSigBottom;
-        double timeInSeconds = -1;
+        float timeInSeconds = -1;
         unsigned int activeBeatFX = BeatEffects::BEAT_FX_NONE;
         unsigned int arpeggioCounter = 0;
 };
@@ -202,7 +208,7 @@ class Song {
         
         ~Song();
 
-        Part* addPart(const std::string& name, Instrument instrument);
+        Part* addPart(const std::string& name, Instrument* instrument);
 
         Part* getPart(const std::string& part) {
             return parts[part];
@@ -229,8 +235,8 @@ class Song {
             this->timeSigBottom = bottom;
         }
 
-        double getDuration() const {
-            double ret = 0;
+        float getDuration() const {
+            float ret = 0;
 
             for(std::map<std::string, Part*>::const_iterator i = parts.begin(); i != parts.end(); ++i) {
                 if(i->second->getDuration() > ret) {

@@ -1,7 +1,7 @@
 #include "Song.h"
 #include <iostream>
 
-double noteFrequencies[OCTAVE_COUNT][NOTE_COUNT] {
+float noteFrequencies[OCTAVE_COUNT][NOTE_COUNT] {
     { 16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87, 0 },
     { 32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 49.00, 51.91, 55.00, 58.27, 61.74, 0 },
     { 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47, 0 },
@@ -19,8 +19,8 @@ Song::~Song() {
     }
 }
 
-Part* Song::addPart(const std::string& name, Instrument instrument) {
-    Part* part = new Part(bpm, timeSigTop, timeSigBottom);
+Part* Song::addPart(const std::string& name, Instrument* instrument) {
+    Part* part = new Part(bpm, timeSigTop, timeSigBottom, instrument);
     parts[name] = part;
     return part;
 }
@@ -61,8 +61,8 @@ unsigned int Part::addNote(unsigned int beat, Note note, Octave octave, unsigned
 
     keyframes[rawBeat]->notes[fractional].push_back(newNote);
     
-    double currentBeat = ((rawBeat + (fractional / (double)BEAT_SUBDIVIDE)) + (rawDuration + fractionalDuration / (double)BEAT_SUBDIVIDE));
-    double minTime = 1 / (bpm / currentBeat) * 60;
+    float currentBeat = ((rawBeat + (fractional / (float)BEAT_SUBDIVIDE)) + (rawDuration + fractionalDuration / (float)BEAT_SUBDIVIDE));
+    float minTime = 1 / (bpm / currentBeat) * 60;
 
     if(minTime > timeInSeconds) {
         timeInSeconds = minTime;
@@ -76,6 +76,6 @@ void Part::enableBeatEffects(unsigned int beatEffects) {
     this->arpeggioCounter = 0;
 }
 
-double Part::getDuration() const {
+float Part::getDuration() const {
     return timeInSeconds;
 }

@@ -8,7 +8,9 @@ extern void createMinuetInG(Song& song) {
     song.setBPM(92 * 3);
     song.setTimeSignature(3, 8);
 
-    Part* part = song.addPart("rawFreq", Instrument::PURE_FREQ);
+    LofiPiano* piano = new LofiPiano();
+
+    Part* part = song.addPart("piano1", piano);
     int indexTrebel = 0;
     int indexBass = 0;
 

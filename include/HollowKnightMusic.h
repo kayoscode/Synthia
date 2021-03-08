@@ -3,12 +3,14 @@
 #define INCLUDE_HOLLOW_KNIGHT_MUSIC_H
 
 #include "Song.h"
+#include "Instrument.h"
 
 extern void createMainTheme(Song& song) {
     song.setBPM(55);
     song.setTimeSignature(3, 4);
+    Instrument* piano = new LofiPiano();
 
-    Part* part = song.addPart("piano1", Instrument::PIANO);
+    Part* part = song.addPart("piano1", piano);
     int indexTrebel = BEAT(0, 0);
     int indexBass = BEAT(0, 0);
 
@@ -92,8 +94,8 @@ extern void createMainTheme(Song& song) {
     indexTrebel = part->addHalfNote(indexTrebel, HOLD, OCTAVE6, NoteEffects::NOTE_FX_EXTEND);
 
     part->enableBeatEffects(BeatEffects::BEAT_FX_ARPEGGIO);
-    part->addHalfNote(indexBass, D, OCTAVE3);
-    part->addHalfNote(indexBass, F, OCTAVE3);
+    part->addHalfNote(indexBass, F, OCTAVE2);
+    part->addHalfNote(indexBass, A, OCTAVE2);
     part->addHalfNote(indexBass, C, OCTAVE4);
     indexBass = part->addHalfNote(indexBass, F, OCTAVE4);
     part->enableBeatEffects(0);
@@ -302,8 +304,9 @@ extern void createMainTheme(Song& song) {
 extern void createDirtmouthTheme(Song& song) {
     song.setBPM(87);
     song.setTimeSignature(4, 4);
+    LofiPiano* piano = new LofiPiano();
 
-    Part* part = song.addPart("rawFreq", Instrument::PURE_FREQ);
+    Part* part = song.addPart("piano1", piano);
     int indexTrebel = BEAT(0, 0);
     int indexBass = BEAT(0, 0);
     
@@ -617,7 +620,9 @@ void createHornetTheme(Song& song) {
     song.setBPM(96 * 3);
     song.setTimeSignature(6, 8);
 
-    Part* part = song.addPart("rawFreq", Instrument::PURE_FREQ);
+    LofiPiano* piano = new LofiPiano();
+
+    Part* part = song.addPart("piano1", piano);
     int indexTrebel = 0;
     int indexBass = 0;
 
