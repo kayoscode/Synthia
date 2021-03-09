@@ -24,3 +24,4 @@ free and open source software. For now, its become a passion project but it has 
 <li>cmake ..</li>
 <li>cmake --build .</li>
 </ol>
+<Wiki>
