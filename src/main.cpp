@@ -15,9 +15,9 @@ int main() {
     }
 
     /**
-    Part* p = song.addPart("piano1", new LofiPiano());
+    Part* p = song.addPart("piano1", new Piano());
     int duration = 0;
-    duration = p->addHalfNote(duration, F, OCTAVE3);
+    duration = p->addHalfNote(duration, D, OCTAVE4, NoteEffects::NOTE_FX_EXTEND);
     duration = p->addHalfNote(duration, D, OCTAVE3);
     duration = p->addHalfNote(duration, E, OCTAVE4);
     duration = p->addHalfNote(duration, F, OCTAVE4);
@@ -28,16 +28,16 @@ int main() {
     */
 
     timer.reset();
-    createHornetTheme(song);
+    createMainTheme(song);
     std::cout << song.getDuration() << "\n";
     std::cout << "Loaded song - took : " << timer.milliseconds() << " milliseconds\n";
 
-    song.saveAsWav("song");
+    //song.saveAsWav("Sound");
     //audio.loadAudioWAV("song.wav");
-    //audio.loadSong(song);
+    audio.loadSong(song);
 
-    //audioPlayer.playAudio(audio);
-    //while(audioPlayer.isPlaying());
+    audioPlayer.playAudio(audio);
+    while(audioPlayer.isPlaying());
 
     //getchar();
     //delete song.getPart("piano1");

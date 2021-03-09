@@ -8,7 +8,7 @@
 extern void createMainTheme(Song& song) {
     song.setBPM(55);
     song.setTimeSignature(3, 4);
-    Instrument* piano = new LofiPiano();
+    Instrument* piano = new Piano();
 
     Part* part = song.addPart("piano1", piano);
     int indexTrebel = BEAT(0, 0);
@@ -304,7 +304,7 @@ extern void createMainTheme(Song& song) {
 extern void createDirtmouthTheme(Song& song) {
     song.setBPM(87);
     song.setTimeSignature(4, 4);
-    LofiPiano* piano = new LofiPiano();
+    Instrument* piano = new Piano();
 
     Part* part = song.addPart("piano1", piano);
     int indexTrebel = BEAT(0, 0);
@@ -620,7 +620,7 @@ void createHornetTheme(Song& song) {
     song.setBPM(96 * 3);
     song.setTimeSignature(6, 8);
 
-    LofiPiano* piano = new LofiPiano();
+    Instrument* piano = new Piano();
 
     Part* part = song.addPart("piano1", piano);
     int indexTrebel = 0;
