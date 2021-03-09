@@ -120,6 +120,8 @@ bool AudioBuffer::loadAudioWAV(const std::string& wavFile) {
     std::string chunkName;
     unsigned int chunkSize;
 
+    std::cout << "LOADING\n\n";
+
     while(!file.eof()) {
         loadWAVChunkData(file, chunkName, chunkSize);
 
@@ -139,14 +141,16 @@ bool AudioBuffer::loadAudioWAV(const std::string& wavFile) {
             file.read((char*)&balign, 2);
             file.read((char*)&samp, 2);
 
+
             bitRate = samp;
             frequencyRate = (float)srate;
-            channels = channels;
+            this->channels = channels;
         }
         else if(chunkName == "data") {
             size = chunkSize;
             data = new char[chunkSize];
             file.read((char*)data, chunkSize);
+            std::cout << chunkSize << "\n";
         }
         else {
             file.ignore(chunkSize);
@@ -154,7 +158,6 @@ bool AudioBuffer::loadAudioWAV(const std::string& wavFile) {
     }
 
     file.close();
-    length = (float)size / (channels * frequencyRate * (bitRate / 8.0f)) * 1000.0f;
 
     alGenBuffers(1, &buffer);
     alBufferData(buffer, getFormat(), data, size, (ALsizei)frequencyRate);
@@ -170,20 +173,6 @@ ALenum AudioBuffer::getFormat() const {
     }
 
     return AL_FORMAT_MONO8;
-}
-
-void normalizeAmp(float* amps, int size) {
-    float maxSignal = 0;
-
-    for(int i = 0; i < size; ++i) {
-        if(std::abs(amps[i]) > maxSignal) {
-            maxSignal = std::abs(amps[i]);
-        }
-    }
-
-    for(int i = 0; i < size; ++i) {
-        amps[i] /= maxSignal;
-    }
 }
 
 bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int minFreq, int maxFreq, float time) {
@@ -234,7 +223,7 @@ bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int m
         currentIndex += usedIndices;
     }
 
-    normalizeAmp(encodedData, samplesCount);
+    //normalizeAmp(encodedData, samplesCount);
 
     for(int i = 0; i < samplesCount; ++i) {
         short value = 0x7FFF * encodedData[i];
@@ -254,73 +243,19 @@ bool AudioBuffer::loadSpectograph(char* bufferData, int width, int height, int m
 
 bool AudioBuffer::loadSong(Song& song) {
     this->length = song.getDuration();
-    this->frequencyRate = 96 * 1000;
+    this->frequencyRate = 48 * 1000;
     this->bitRate = 16;
     this->channels = 1;
     int samplesCount = (frequencyRate) * length;
     this->size = (bitRate / 8) * samplesCount;
     this->data = new char[size];
-    float* encodedData = new float[samplesCount];
 
-    for(int i = 0; i < samplesCount; ++i) {
-        encodedData[i] = 0;
-    }
-    
-    //load keyframe data into buffer
-    //gotta greatly improve the time for this operation - too slow
-    for(std::map<std::string, Part*>::iterator i = song.getParts()->begin(); i != song.getParts()->end(); ++i) {
-        Part* part = i->second;
-        std::map<unsigned int, Beat*>* keyframes = part->getKeyframes();
+    std::cout << size << "\n";
 
-        for(std::map<unsigned int, Beat*>::iterator j = keyframes->begin(); j != keyframes->end(); ++j) {
-            Beat* beat = j->second;
-            int rawStart = j->first;
-            float volume = 1;
-
-            for(std::map<unsigned short, std::vector<NoteStruct>>::iterator k = beat->notes.begin(); k != beat->notes.end(); ++k) {
-                for(int w = 0; w < k->second.size(); ++w) {
-                    int rawDuration = k->second[w].duration / BEAT_SUBDIVIDE;
-                    int fractionalDuration = k->second[w].duration % BEAT_SUBDIVIDE;
-                    unsigned int noteFX = k->second[w].noteFX;
-                    unsigned int startOffset = k->second[w].startOffset;
-                    
-                    float duration = (rawDuration + fractionalDuration / (float)BEAT_SUBDIVIDE) - startOffset;
-                    float start = (rawStart + (k->first / (float)BEAT_SUBDIVIDE)) + startOffset;
-                    start = 1 / (song.getBPM() / start) * 60;
-                    duration = 1 / (song.getBPM() / duration) * 60;
-
-                    int startIndex = (start / length) * samplesCount;
-
-                    if(noteFX & NoteEffects::NOTE_FX_STACCATO) {
-                        duration /= 2;
-                    }
-
-                    if(noteFX & NoteEffects::NOTE_FX_CRESCENDO) {
-                        volume *= 1.2;
-                    }
-
-                    if(noteFX & NoteEffects::NOTE_FX_DIMINUENDO) {
-                        volume *= .75;
-                    }
-
-                    synthesizer.synthesize(NOTE(k->second[w].note, k->second[w].oct), duration, start, startIndex, volume, encodedData, part->getInstrument(), frequencyRate);
-                }
-            }
-        }
-    }
-
-    normalizeAmp(encodedData, samplesCount);
-
-    for(int i = 0; i < samplesCount; ++i) {
-        short value = 0x7FFF * encodedData[i];
-        short* d = (short*)data;
-        d[i] = value;
-    }
+    SongEncoder::loadSongBinary(song, data, frequencyRate, synthesizer);
 
     alGenBuffers(1, &buffer);
     alBufferData(buffer, getFormat(), data, size, (ALsizei)frequencyRate);
-
-    delete[] encodedData;
 
     return true;
 }

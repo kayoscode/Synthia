@@ -14,26 +14,31 @@ int main() {
         std::cout << "failed to load audio player\n";
     }
 
-    //Part* p = song.addPart("piano1", new LofiPiano());
-    //int duration = 0;
-    //duration = p->addHalfNote(duration, F, OCTAVE3);
-    //duration = p->add16Note(duration, D, OCTAVE3);
-    //duration = p->add16Note(duration, E, OCTAVE4);
-    //duration = p->add16Note(duration, F, OCTAVE4);
-    //duration = p->add16Note(duration, G, OCTAVE4);
-    //duration = p->add16Note(duration, A, OCTAVE4);
-    //duration = p->add16Note(duration, B, OCTAVE4);
-    //duration = p->add16Note(duration, C, OCTAVE5);
+    /**
+    Part* p = song.addPart("piano1", new LofiPiano());
+    int duration = 0;
+    duration = p->addHalfNote(duration, F, OCTAVE3);
+    duration = p->addHalfNote(duration, D, OCTAVE3);
+    duration = p->addHalfNote(duration, E, OCTAVE4);
+    duration = p->addHalfNote(duration, F, OCTAVE4);
+    duration = p->addHalfNote(duration, G, OCTAVE4);
+    duration = p->addHalfNote(duration, A, OCTAVE4);
+    duration = p->addHalfNote(duration, B, OCTAVE4);
+    duration = p->addHalfNote(duration, C, OCTAVE5);
+    */
 
     timer.reset();
-    createDirtmouthTheme(song);
+    createHornetTheme(song);
     std::cout << song.getDuration() << "\n";
-    audio.loadSong(song);
     std::cout << "Loaded song - took : " << timer.milliseconds() << " milliseconds\n";
 
-    audioPlayer.playAudio(audio);
-    while(audioPlayer.isPlaying());
+    song.saveAsWav("song");
+    //audio.loadAudioWAV("song.wav");
+    //audio.loadSong(song);
 
-    getchar();
+    //audioPlayer.playAudio(audio);
+    //while(audioPlayer.isPlaying());
+
+    //getchar();
     //delete song.getPart("piano1");
 }

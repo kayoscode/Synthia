@@ -1,7 +1,10 @@
 #include "Synthesizer.h"
 #include <algorithm>
 
-int Synthesizer::synthesize(float frequency, float duration, float timeOffset, int startIndex, float vol, float* data, Instrument* instrument, float sampleRate) {
+#include "Song.h"
+#include "Instrument.h"
+
+int Synthesizer::synthesize(float frequency, float duration, float timeOffset, int startIndex, float vol, float* data, Instrument* instrument, float sampleRate) const {
     float secondsPerSample = 1 / (float)sampleRate;
     int samplesCount = duration * sampleRate;
     int indexBase = startIndex;
@@ -35,7 +38,7 @@ int Synthesizer::synthesize(float frequency, float duration, float timeOffset, i
         }
     
         //encode y in buffer
-        data[indexBase + i] += vol * amplitude * instrument->sample(time, frequency);
+        data[indexBase + i] += vol * amplitude * instrument->sample(time, frequency, t, duration);
     }
 
     return samplesCount;

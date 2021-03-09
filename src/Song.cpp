@@ -1,5 +1,6 @@
 #include "Song.h"
 #include <iostream>
+#include <fstream>
 
 float noteFrequencies[OCTAVE_COUNT][NOTE_COUNT] {
     { 16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87, 0 },
@@ -14,9 +15,169 @@ float noteFrequencies[OCTAVE_COUNT][NOTE_COUNT] {
 };
 
 Song::~Song() {
-    for(std::map<std::string, Part*>::iterator i = parts.begin(); i != parts.end(); ++i) {
-        delete i->second;
+for(std::map<std::string, Part*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+    delete i->second;
+}
+}
+
+void normalizeAmp(float* amps, int size) {
+    float maxSignal = 0;
+
+    for(int i = 0; i < size; ++i) {
+        if(std::abs(amps[i]) > maxSignal) {
+            maxSignal = std::abs(amps[i]);
+        }
     }
+
+    for(int i = 0; i < size; ++i) {
+        amps[i] /= maxSignal;
+    }
+}
+
+//for now, assuming a bitrate of 16
+int SongEncoder::getSongBinarySize(Song& song, int sampleRate) {
+    return (16/8 * sampleRate) * song.getDuration();
+}
+
+void SongEncoder::loadSongBinary(Song& song, char* data, int sampleRate, const Synthesizer& synthesizer) {
+    float length = song.getDuration();
+    float frequencyRate = (float)sampleRate;
+    int bitRate = 16;
+    int channels = 1;
+    int samplesCount = (frequencyRate) * length;
+    int size = (bitRate / 8) * samplesCount;
+
+    float* encodedData = new float[samplesCount];
+
+    for(int i = 0; i < samplesCount; ++i) {
+        encodedData[i] = 0;
+    }
+    
+    //load keyframe data into buffer
+    //gotta greatly improve the time for this operation - too slow
+    for(std::map<std::string, Part*>::iterator i = song.getParts()->begin(); i != song.getParts()->end(); ++i) {
+        Part* part = i->second;
+        std::map<unsigned int, Beat*>* keyframes = part->getKeyframes();
+
+        for(std::map<unsigned int, Beat*>::iterator j = keyframes->begin(); j != keyframes->end(); ++j) {
+            Beat* beat = j->second;
+            int rawStart = j->first;
+            float volume = 1;
+
+            for(std::map<unsigned short, std::vector<NoteStruct>>::iterator k = beat->notes.begin(); k != beat->notes.end(); ++k) {
+                for(int w = 0; w < k->second.size(); ++w) {
+                    int rawDuration = k->second[w].duration / BEAT_SUBDIVIDE;
+                    int fractionalDuration = k->second[w].duration % BEAT_SUBDIVIDE;
+                    unsigned int noteFX = k->second[w].noteFX;
+                    unsigned int startOffset = k->second[w].startOffset;
+                    
+                    float duration = (rawDuration + fractionalDuration / (float)BEAT_SUBDIVIDE) - startOffset;
+                    float start = (rawStart + (k->first / (float)BEAT_SUBDIVIDE)) + startOffset;
+                    start = 1 / (song.getBPM() / start) * 60;
+                    duration = 1 / (song.getBPM() / duration) * 60;
+
+                    int startIndex = (start / length) * samplesCount;
+
+                    if(noteFX & NoteEffects::NOTE_FX_STACCATO) {
+                        duration /= 2;
+                    }
+
+                    if(noteFX & NoteEffects::NOTE_FX_CRESCENDO) {
+                        volume *= 1.2;
+                    }
+
+                    if(noteFX & NoteEffects::NOTE_FX_DIMINUENDO) {
+                        volume *= .75;
+                    }
+
+                    synthesizer.synthesize(NOTE(k->second[w].note, k->second[w].oct), duration, start, startIndex, volume, encodedData, part->getInstrument(), frequencyRate);
+                }
+            }
+        }
+
+        //apply equalization
+        part->getInstrument()->equalize(encodedData, samplesCount, frequencyRate);
+    }
+
+    normalizeAmp(encodedData, samplesCount);
+
+    for(int i = 0; i < samplesCount; ++i) {
+        short value = 0x7FFF * encodedData[i];
+        short* d = (short*)data;
+        d[i] = value;
+    }
+
+    delete[] encodedData;
+}
+
+uint32_t getBigEndian(uint32_t number) {
+    char buffer[4];
+
+    buffer[3] = number & 0xFF;
+    buffer[2] = (number >> 8) & 0xFF;
+    buffer[1] = (number >> 16) & 0xFF;
+    buffer[0] = (number >> 24) & 0xFF;
+
+    return *((uint32_t*)buffer);
+}
+
+uint16_t getBigEndian16(uint16_t number) {
+    char buffer[2];
+
+    buffer[1] = number & 0xFF;
+    buffer[0] = (number >> 8) & 0xFF;
+
+    return *((uint16_t*)buffer);
+}
+
+void Song::saveAsWav(const std::string& fileName) {
+    std::cout << "SAVING\n\n";
+    uint32_t sampleRate = 48000;
+    uint16_t bitRate = 16;
+    uint16_t channels = 1;
+    uint32_t size = SongEncoder::getSongBinarySize(*this, sampleRate);
+    char* binary = new char[size];
+    uint32_t totalSize = 36 + size;
+
+    uint32_t chunk1Size = 16;
+    uint16_t PCM = 1;
+    uint32_t byteRate = (sampleRate * channels * bitRate) / 8;
+    uint16_t blockAlign = channels * (bitRate / 8);
+
+    Synthesizer s;
+    SongEncoder::loadSongBinary(*this, binary, sampleRate, s);
+
+    std::ofstream outputFile(fileName + ".wav", std::ios::binary);
+    outputFile.write("RIFF", 4);
+    outputFile.write((char*)&totalSize, 4);
+    outputFile.write("WAVE", 4);
+
+    //write chunk1
+    outputFile.write("fmt ", 4);
+    outputFile.write((char*)&chunk1Size, 4);
+    //write audio format which is 1 - because no compression is used
+    outputFile.write((char*)&PCM, 2);
+    //write number of channels which is always 1 which happens to be inside PCM
+    outputFile.write((char*)&channels, 2);
+    //write sample rate
+    outputFile.write((char*)&sampleRate, 4);
+    //write byte rate
+    outputFile.write((char*)&byteRate, 4);
+    //write block align
+    outputFile.write((char*)&blockAlign, 2);
+    //write bits per sample
+    outputFile.write((char*)&bitRate, 2);
+
+    //write data chunk
+    outputFile.write("data", 4);
+    //write data size
+    outputFile.write((char*)&size, 4);
+    //write actual sound data
+
+    outputFile.write(binary, size);
+
+    outputFile.close();
+    delete[] binary;
 }
 
 Part* Song::addPart(const std::string& name, Instrument* instrument) {

@@ -10,8 +10,8 @@ class Instrument {
         virtual float getSustainAmplitude(float time, float holdDuration, float velocity) = 0;
         virtual float getHoldAmplitude(float time, float holdDuration, float velocity) = 0;
 
-        virtual float sample(float time, float frequency) = 0;
-        virtual float equalize(float y) = 0;
+        virtual float sample(float time, float frequency, float noteTime, float noteDuration) = 0;
+        virtual void equalize(float* data, int size, float dt) = 0;
 
         virtual float getAttackDuration() = 0;
         virtual float getReleaseDuration() = 0;
@@ -62,7 +62,25 @@ class Instrument {
             return start * (1 - t) + target * t;
         }
 
-        //float filter() - eq helper function
+        void highPassFilter(float* data, int size, float dt, float RC) {
+            float alpha = RC / (RC + dt);
+            float previous = data[0];
+
+            for(int i = 1; i < size; i++) {
+                float tmp = data[i];
+                data[i] = alpha * (data[i - 1] + previous - data[i]);
+                previous = tmp;
+            }
+        }
+
+        void lowPassFilter(float* data, int size, float dt, float RC) {
+            float alpha = dt / (RC + dt);
+            data[0] = alpha * data[0];
+
+            for(int i = 1; i < size; i++) {
+                data[i] = data[i - 1] + alpha * (data[i] - data[i - 1]);
+            }
+        }
 };
 
 class LofiPiano : public Instrument {
@@ -80,73 +98,32 @@ class LofiPiano : public Instrument {
         }
 
         float getHoldAmplitude(float time, float holdDuration, float velocity) {
-            return std::exp(1.5 * -time);
+            return std::exp(1.6 * -time);
         }
 
         float getAttackDuration() {
-            return .01;
+            return .0012;
         }
 
         float getReleaseDuration() {
-            return .009;
+            return .0015;
         }
 
-        float sample(float time, float frequency) {
+        float sample(float time, float frequency, float noteTime, float noteDuration) {
             float voice = 0;
-            voice += generateSinWave(time, 1 * frequency) * 2;
-            voice += generateSawToothWave(time, 1 * frequency) / 12;
-
-            voice += generateTriangleWave(time, 2 * frequency) / 4;
-            voice += generateSinWave(time, 2 * frequency) / 8;
-
-            voice += generateSinWave(time, 3 * frequency) / 16;
-            voice += generateSinWave(time, 4 * frequency) / 32;
-
-            voice += voice * voice * voice;
+            voice += generateSinWave(time, 1 * frequency) / 1;
+            voice += generateSinWave(time, 2 * frequency) / 2;
+            voice += generateSinWave(time, 3 * frequency) / 4;
+            voice += generateSinWave(time, 4 * frequency) / 8;
+            voice += generateSawToothWave(time, 3 * frequency) / 128;
+            voice += generateSawToothWave(time, 4 * frequency) / 256;
 
             return voice;
         }
 
-        float equalize(float y) {
-            return y;
-        }
-};
-
-class ElectricGuitar : public Instrument {
-    public:
-        float getAttackAmpltitude(float time, float holdAmp, float velocity) {
-            return linearInterpolation(0, holdAmp, time / getAttackDuration());
-        }
-
-        float getReleaseAmpltitude(float t, float holdAmp, float velocity) {
-            return linearInterpolation(holdAmp, 0, t / getReleaseDuration());
-        }
-
-        float getSustainAmplitude(float progress, float holdDuration, float velocity) {
-            return 0;
-        }
-
-        float getHoldAmplitude(float time, float holdDuration, float velocity) {
-            return std::exp(1.5 * -time);
-        }
-
-        float getAttackDuration() {
-            return .01;
-        }
-
-        float getReleaseDuration() {
-            return .009;
-        }
-
-        float sample(float time, float frequency) {
-            float voice = 0;
-            voice += generateSawToothWave(time, 1 * frequency);
-
-            return voice;
-        }
-
-        float equalize(float y) {
-            return y;
+        void equalize(float* data, int size, float freq) {
+            float dt = 1 / freq;
+            lowPassFilter(data, size, dt, 1/(double)5500);
         }
 };
 

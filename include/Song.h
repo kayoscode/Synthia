@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "Instrument.h"
+#include "Synthesizer.h"
 
 #define NOTE(note, oct) noteFrequencies[oct][note]
 #define BEAT_SUBDIVIDE 128
@@ -251,11 +252,19 @@ class Song {
             return &parts;
         }
 
+        void saveAsWav(const std::string& fileName);
+
     private:
         std::map<std::string, Part*> parts;
         int bpm;
 
         int timeSigTop, timeSigBottom;
+};
+
+class SongEncoder {
+    public:
+        static int getSongBinarySize(Song& song, int sampleRate);
+        static void loadSongBinary(Song& song, char* binary, int sampleRate, const Synthesizer& synth);
 };
 
 #endif
